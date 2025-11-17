@@ -1,0 +1,32 @@
+# Maven target directory
+/target/
+
+# Compiled class files
+*.class
+
+# Log files
+*.log
+
+# IDE files (Visual Studio Code, IntelliJ, Eclipse)
+.vscode/
+.idea/
+*.iml
+.project
+.classpath
+.settings/
+*.launch
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Environment variables and config files with secrets
+.env
+
+# External libraries and generated jars
+*.jar
+*.war
+
+# Spring Boot specific
+spring.log
+spring-boot-devtools.properties
