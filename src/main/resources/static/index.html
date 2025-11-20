@@ -1,10 +1,29 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>E-commerce</title>
+    <meta charset="UTF-8">
+    <title>SISTEMA DE GESTIÓN - TECHLAB</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="main.css">
 </head>
-<body>
-  <h1>Bienvenido a tu tienda</h1>
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto py-8">
+        <h1 class="text-4xl font-bold text-blue-700 mb-8 text-center">
+            SISTEMA DE GESTIÓN - TECHLAB
+        </h1>
+        <nav id="menuPrincipal" class="mb-8">
+            <button onclick="mostrarSeccion('productos')" class="block w-full text-left px-4 py-2 mb-1 bg-blue-200 hover:bg-blue-400 rounded">1) Gestionar Productos</button>
+            <button onclick="mostrarSeccion('categorias')" class="block w-full text-left px-4 py-2 mb-1 bg-blue-200 hover:bg-blue-400 rounded">2) Gestionar Categorías</button>
+            <button onclick="mostrarSeccion('carrito')" class="block w-full text-left px-4 py-2 mb-1 bg-blue-200 hover:bg-blue-400 rounded">3) Ver Carrito de Compras</button>
+            <button onclick="mostrarSeccion('realizarPedido')" class="block w-full text-left px-4 py-2 mb-1 bg-blue-200 hover:bg-blue-400 rounded">4) Realizar Pedido</button>
+            <button onclick="mostrarSeccion('historialPedidos')" class="block w-full text-left px-4 py-2 mb-1 bg-blue-200 hover:bg-blue-400 rounded">5) Consultar Historial de Pedidos</button>
+            <button onclick="mostrarSeccion('admin')" class="block w-full text-left px-4 py-2 mb-1 bg-blue-200 hover:bg-blue-400 rounded">6) Administración</button>
+            <button onclick="mostrarSeccion('salir')" class="block w-full text-left px-4 py-2 mb-1 bg-red-300 hover:bg-red-500 rounded">7) Salir</button>
+        </nav>
+        <section id="seccionPrincipal">
+            <!-- Aquí se renderizan las secciones dinámicamente -->
+        </section>
+    </div>
+    <script src="app.js"></script>
 </body>
 </html>
