@@ -2,77 +2,62 @@ package com.techlab.productos;
 
 import com.techlab.excepciones.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ProductoService {
-    private final List<Producto> productos = new ArrayList<>();
-    private int currentId = 1;
+
+    private final ProductoRepository repository;
+
+    public ProductoService(ProductoRepository repository) {
+        this.repository = repository;
+    }
 
     public List<Producto> getAll() {
-        return productos;
+        return repository.findAll();
     }
 
     public Producto save(Producto producto) {
-        producto.setId(currentId++);
-        productos.add(producto);
-        return producto;
+        // No seteás id; lo genera la DB
+        if (producto == null) {
+            throw new IllegalArgumentException("El producto no puede ser nulo");
+        }
+        return repository.save(producto);
     }
 
     public Optional<Producto> findById(int id) {
-        return productos.stream().filter(p -> p.getId() == id).findFirst();
+        return repository.findById(id);
     }
 
-    // Devuelve el producto o lanza ResourceNotFoundException
     public Producto getById(int id) {
-        return findById(id).orElseThrow(() ->
-            new ResourceNotFoundException("Producto no encontrado con id: " + id));
+        return findById(id).orElseThrow(
+            () -> new ResourceNotFoundException("Producto no encontrado con id: " + id)
+        );
     }
 
-    // Actualiza reemplazando el objeto manteniendo el id
     public Producto update(int id, Producto nuevoProducto) {
-        int index = -1;
-        for (int i = 0; i < productos.size(); i++) {
-            if (productos.get(i).getId() == id) {
-                index = i;
-                break;
-            }
-        }
-        if (index == -1) {
-            throw new ResourceNotFoundException("Producto no encontrado con id: " + id);
-        }
-        nuevoProducto.setId(id);
-        productos.set(index, nuevoProducto);
-        return nuevoProducto;
+        Producto existente = getById(id); // lanza excepción si no existe
+        // copiás campos que quieras actualizar
+        existente.setNombre(nuevoProducto.getNombre());
+        existente.setDescripcion(nuevoProducto.getDescripcion());
+        existente.setPrecio(nuevoProducto.getPrecio());
+        existente.setCategoria(nuevoProducto.getCategoria());
+        existente.setUrlImagen(nuevoProducto.getUrlImagen());
+        existente.setStock(nuevoProducto.getStock());
+        return repository.save(existente);
     }
 
     public void deleteById(int id) {
-        boolean removed = productos.removeIf(p -> p.getId() == id);
-        if (!removed) {
+        if (!repository.existsById(id)) {
             throw new ResourceNotFoundException("Producto no encontrado con id: " + id);
         }
+        repository.deleteById(id);
     }
 
-    // Buscar por nombre (case-insensitive, contiene)
     public List<Producto> findByName(String nombre) {
-        if (nombre == null || nombre.isBlank()) {
-            return new ArrayList<>();
-        }
-        String q = nombre.toLowerCase();
-        return productos.stream()
-                .filter(p -> {
-                    try {
-                        return p.getNombre() != null && p.getNombre().toLowerCase().contains(q);
-                    } catch (Exception e) {
-                        return false;
-                    }
-                })
-                .collect(Collectors.toList());
-    }
+        // Implementar búsqueda por nombre si es necesario
+        throw new UnsupportedOperationException("Búsqueda por nombre no implementada");
+    }   
 
-    
 }

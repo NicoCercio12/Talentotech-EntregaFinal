@@ -1,8 +1,15 @@
 package com.techlab.productos;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "producto")
 public class Producto {
 
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;   // mantener Integer aquí
+
     private String nombre;
     private String descripcion;
     private double precio;
@@ -10,9 +17,10 @@ public class Producto {
     private String urlImagen;
     private int stock;
 
-    public Producto(int id, String nombre, String descripcion, double precio, String categoria, String urlImagen,
-            int stock) {
-        this.id = id;
+    public Producto() {}
+
+    // Constructor SIN id (la DB lo genera)
+    public Producto(String nombre, String descripcion, double precio, String categoria, String urlImagen, int stock) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
@@ -21,64 +29,29 @@ public class Producto {
         this.stock = stock;
     }
 
-    public int getId() {
+    public Integer getId() {          // devolver Integer
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {   // recibir Integer
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+    public String getDescripcion() { return descripcion; }
+    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
 
-    public String getDescripcion() {
-        return descripcion;
-    }
+    public double getPrecio() { return precio; }
+    public void setPrecio(double precio) { this.precio = precio; }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
+    public String getCategoria() { return categoria; }
+    public void setCategoria(String categoria) { this.categoria = categoria; }
 
-    public double getPrecio() {
-        return precio;
-    }
+    public String getUrlImagen() { return urlImagen; }
+    public void setUrlImagen(String urlImagen) { this.urlImagen = urlImagen; }
 
-    public void setPrecio(double precio) {
-        this.precio = precio;
-    }
-
-    public String getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
-    }
-
-    public String getUrlImagen() {
-        return urlImagen;
-    }
-
-    public void setUrlImagen(String urlImagen) {
-        this.urlImagen = urlImagen;
-    }
-
-    public int getStock() {
-        return stock;
-    }
-
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
-
-    
-   
-
-
+    public int getStock() { return stock; }
+    public void setStock(int stock) { this.stock = stock; }
 }
